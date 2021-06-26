@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bruno.domain.model.Usuario;
 import com.bruno.domain.repository.UsuarioRepository;
+import com.bruno.domain.service.CrudUsuarioService;
 
 import lombok.AllArgsConstructor;
 
@@ -27,6 +28,7 @@ import lombok.AllArgsConstructor;
 public class UsuarioController {
 	
 	private UsuarioRepository usuarioRepository;
+	private CrudUsuarioService crudUsuarioService;
 	
 	@GetMapping
 	public List<Usuario> listar() {
@@ -36,7 +38,7 @@ public class UsuarioController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Usuario cadastrar (@Valid @RequestBody Usuario usuario) {
-		return usuarioRepository.save(usuario);
+		return crudUsuarioService.salvar(usuario);
 	}
 	
 	@PutMapping("/{usuarioId}")
@@ -46,7 +48,7 @@ public class UsuarioController {
 		}
 		
 		usuario.setId(usuarioId);
-		usuario = usuarioRepository.save(usuario);
+		usuario = crudUsuarioService.salvar(usuario);
 		
 		return ResponseEntity.ok(usuario);
 	}
@@ -58,7 +60,7 @@ public class UsuarioController {
 			return ResponseEntity.notFound().build();
 		}
 
-		usuarioRepository.deleteById(usuarioId);
+		crudUsuarioService.excluir(usuarioId);
 
 		return ResponseEntity.noContent().build();
 	}
