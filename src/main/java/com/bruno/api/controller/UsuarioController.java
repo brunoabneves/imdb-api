@@ -2,6 +2,8 @@ package com.bruno.api.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,12 +35,12 @@ public class UsuarioController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuario cadastrar (@RequestBody Usuario usuario) {
+	public Usuario cadastrar (@Valid @RequestBody Usuario usuario) {
 		return usuarioRepository.save(usuario);
 	}
 	
 	@PutMapping("/{usuarioId}")
-	public ResponseEntity<Usuario> editar (@PathVariable Long usuarioId, @RequestBody Usuario usuario) {
+	public ResponseEntity<Usuario> editar (@Valid @PathVariable Long usuarioId, @RequestBody Usuario usuario) {
 		if(!usuarioRepository.existsById(usuarioId)) {
 			return ResponseEntity.notFound().build();
 		}
