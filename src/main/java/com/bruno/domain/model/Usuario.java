@@ -17,7 +17,7 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Usuario {
-	
+
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,5 +31,8 @@ public class Usuario {
 	@Email
 	@Size(max = 255)
 	private String email;
+	
+	@Size(max = 100)
+	private String senha;
 	
 }
