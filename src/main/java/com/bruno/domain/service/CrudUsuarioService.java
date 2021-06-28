@@ -15,6 +15,11 @@ public class CrudUsuarioService {
 
 	private UsuarioRepository usuarioRepository;
 	
+	public Usuario buscar(Long clienteId) {
+		return usuarioRepository.findById(clienteId)
+				.orElseThrow(() -> new NegocioException("Usuário não encontrado"));
+	}
+	
 	@Transactional
 	public Usuario salvar(Usuario usuario) {
 		boolean emailEmUso = usuarioRepository.findByEmail(usuario.getEmail())

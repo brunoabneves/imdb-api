@@ -30,6 +30,7 @@ public class UsuarioController {
 	private UsuarioRepository usuarioRepository;
 	private CrudUsuarioService crudUsuarioService;
 	
+	//método apenas de teste
 	@GetMapping
 	public List<Usuario> listar() {
 		return usuarioRepository.findAll();

@@ -1,13 +1,10 @@
 package com.bruno.domain.model;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -19,8 +16,8 @@ import lombok.Setter;
 @Setter
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Filme {
-
+public class Ator {
+	
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,28 +27,6 @@ public class Filme {
 	@Size(max = 60)
 	private String nome;
 	
-	@NotBlank
-	@Size(max = 60)
-	private String diretor;
-	
-	@NotBlank
-	@Size(max = 20)
-	private String genero;
-	
-	@OneToMany
-	private List<Voto> votos;
-	
-	@OneToMany(mappedBy = "filme", cascade = CascadeType.ALL)
-	private List<Ator> atores;
-	
-	public Ator adicionarAtor(String nome) {
-		Ator ator = new Ator();
-		ator.setNome(nome);
-		ator.setFilme(this);
-		
-		this.getAtores().add(ator);
-		
-		return ator;
-	}
-	
+	@ManyToOne
+	private Filme filme;
 }

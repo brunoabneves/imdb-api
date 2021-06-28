@@ -1,38 +1,38 @@
 package com.bruno.domain.model;
 
+import java.time.OffsetDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Email;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 @Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-public class Usuario {
+public class Voto {
 
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+	private Long id;
 	
 	@NotBlank
-	@Size(max = 60)
-	protected String nome;
+	private Integer nota;
 	
-	@NotBlank
-	@Email
-	@Size(max = 255)
-	protected String email;
+	@ManyToOne
+	private Usuario usuario;
 	
-	@Size(max = 100)
-	protected String senha;
+	@ManyToOne
+	private Filme filme;
+	
+	private OffsetDateTime dataVoto;
 	
 }

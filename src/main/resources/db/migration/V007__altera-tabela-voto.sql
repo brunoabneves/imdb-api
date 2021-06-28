@@ -1,0 +1,1 @@
+alter table voto add column nota int;

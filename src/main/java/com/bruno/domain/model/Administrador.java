@@ -9,30 +9,24 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Getter
-@Setter
 @Entity
-public class Usuario {
+public class Administrador {
 
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Long id;
-	
+		
 	@NotBlank
 	@Size(max = 60)
 	protected String nome;
-	
+		
 	@NotBlank
 	@Email
 	@Size(max = 255)
 	protected String email;
-	
+		
 	@Size(max = 100)
 	protected String senha;
-	
 }
