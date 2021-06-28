@@ -1,5 +1,6 @@
 package com.bruno.domain.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -38,18 +39,15 @@ public class Filme {
 	@Size(max = 20)
 	private String genero;
 	
-	@OneToMany
-	private List<Voto> votos;
-	
 	@OneToMany(mappedBy = "filme", cascade = CascadeType.ALL)
-	private List<Ator> atores;
+	private List<Ator> ator = new ArrayList<>();
 	
 	public Ator adicionarAtor(String nome) {
 		Ator ator = new Ator();
 		ator.setNome(nome);
 		ator.setFilme(this);
 		
-		this.getAtores().add(ator);
+		this.getAtor().add(ator);
 		
 		return ator;
 	}

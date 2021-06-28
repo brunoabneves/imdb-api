@@ -22,7 +22,7 @@ public class CrudFilmeService {
 				.anyMatch(filmeExistente -> !filmeExistente.equals(filme));
 		
 		if (nomeEmUso) {
-			throw new NegocioException("Já existe um usuário cadastrado com este e-mail.");
+			throw new NegocioException("Já existe um usuário cadastrado com este nome.");
 		}
 		
 		return filmeRepository.save(filme);
@@ -31,5 +31,15 @@ public class CrudFilmeService {
 	public Filme buscar(Long filmeId) {
 		return filmeRepository.findById(filmeId)
 				.orElseThrow(() -> new NegocioException("Filme não encontrado"));
+	}
+	
+	/*public Filme buscarPorAtor(String ator) {
+		return filmeRepository.findByAtor(ator)
+				.orElseThrow(() -> new NegocioException("Filme não encontrado"));
+	}*/
+	
+	@Transactional
+	public void excluir(Long filmeId) {
+		filmeRepository.deleteById(filmeId);
 	}
 }

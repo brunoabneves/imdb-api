@@ -14,8 +14,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
 public class Ator {
 	
 	@EqualsAndHashCode.Include
@@ -29,4 +29,5 @@ public class Ator {
 	
 	@ManyToOne
 	private Filme filme;
+	
 }

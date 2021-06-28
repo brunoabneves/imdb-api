@@ -46,10 +46,18 @@ public class VotarService {
 		Filme filme = crudFilmeService.buscar(filmeId);
 		
 		voto.setUsuario(usuario);
-		voto.setNota(nota);
+		voto.setNota(limiteNota(nota));
 		voto.setFilme(filme);
 		voto.setDataVoto(OffsetDateTime.now());
 		
 		return voto;
+	}
+	
+	public Integer limiteNota(Integer nota) {
+		if (nota >=0 && nota <=4) {
+			throw new NegocioException("Nota inválida, insira um número entre 0 e 4.");
+		}else
+		
+		return nota;
 	}
 }
