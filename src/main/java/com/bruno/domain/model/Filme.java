@@ -9,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,17 +24,11 @@ public class Filme {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotBlank
-	@Size(max = 60)
+
 	private String nome;
-	
-	@NotBlank
-	@Size(max = 60)
+
 	private String diretor;
 	
-	@NotBlank
-	@Size(max = 20)
 	private String genero;
 	
 	@OneToMany(mappedBy = "filme", cascade = CascadeType.ALL)

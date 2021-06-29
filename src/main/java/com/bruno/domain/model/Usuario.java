@@ -4,8 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import lombok.EqualsAndHashCode;
@@ -21,18 +19,13 @@ public class Usuario {
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+	private Long id;
+
+	private String nome;
 	
-	@NotBlank
-	@Size(max = 60)
-	protected String nome;
-	
-	@NotBlank
-	@Email
-	@Size(max = 255)
-	protected String email;
+	private String email;
 	
 	@Size(max = 100)
-	protected String senha;
+	private String senha;
 	
 }

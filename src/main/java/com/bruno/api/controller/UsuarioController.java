@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bruno.api.assembler.UsuarioAssembler;
+import com.bruno.api.model.UsuarioModel;
+import com.bruno.api.model.input.UsuarioInput;
 import com.bruno.domain.model.Usuario;
 import com.bruno.domain.repository.UsuarioRepository;
 import com.bruno.domain.service.CrudUsuarioService;
@@ -29,31 +32,35 @@ public class UsuarioController {
 	
 	private UsuarioRepository usuarioRepository;
 	private CrudUsuarioService crudUsuarioService;
+	private UsuarioAssembler usuarioAssembler;
 	
 	//método apenas de teste
 	@GetMapping
-	public List<Usuario> listar() {
-		return usuarioRepository.findAll();
+	public List<UsuarioModel> listar() {
+		return usuarioAssembler.toCollectionModel(usuarioRepository.findAll());
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuario cadastrar (@Valid @RequestBody Usuario usuario) {
-		return crudUsuarioService.salvar(usuario);
+	public UsuarioModel cadastrar (@Valid @RequestBody UsuarioInput usuarioInput) {
+		Usuario novoUsuario = usuarioAssembler.toEntity(usuarioInput);
+		return usuarioAssembler.toModel(crudUsuarioService.salvar(novoUsuario));
 	}
 	
 	@PutMapping("/{usuarioId}")
-	public ResponseEntity<Usuario> editar (@Valid @PathVariable Long usuarioId, @RequestBody Usuario usuario) {
+	public ResponseEntity<UsuarioModel> editar (@Valid @PathVariable Long usuarioId, @RequestBody UsuarioInput usuarioInput) {
 		if(!usuarioRepository.existsById(usuarioId)) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		usuario.setId(usuarioId);
-		usuario = crudUsuarioService.salvar(usuario);
+		Usuario usuarioEditado = usuarioAssembler.toEntity(usuarioInput);
 		
-		return ResponseEntity.ok(usuario);
+		usuarioEditado.setId(usuarioId);
+		
+		return ResponseEntity.ok(usuarioAssembler.toModel(crudUsuarioService.salvar(usuarioEditado)));
 	}
 	
+	//implementar exclusão lógica
 	@DeleteMapping("/{usuarioId}")
 	public ResponseEntity<Void> deletar(@PathVariable Long usuarioId) {
 
