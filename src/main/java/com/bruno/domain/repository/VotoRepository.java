@@ -10,7 +10,8 @@ import com.bruno.domain.model.Voto;
 @Repository
 public interface VotoRepository extends JpaRepository<Voto, Long>{
 
-	Optional<Voto> findByFilme(Long id);
-	Optional<Voto> findByUsuario(Long id);
+	Optional<Voto> findByFilmeId(Long id);
+	Optional<Voto> findByUsuarioId(Long id);
+	Optional<Voto> findByFilmeIdAndUsuarioId(Long filmeId, Long usuarioId);
 
 }

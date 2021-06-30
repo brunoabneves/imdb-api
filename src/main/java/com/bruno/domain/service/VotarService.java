@@ -20,40 +20,35 @@ public class VotarService {
 	private VotoRepository votoRepository;
 	private CrudFilmeService crudFilmeService;
 	private CrudUsuarioService crudUsuarioService;
-	
+
 	@Transactional
-	public Voto salvar(Voto voto) {
-		boolean filmeExiste = votoRepository.findByFilme(voto.getFilme().getId())
+	public Voto votar(Long filmeId, Long usuarioId, Voto voto) {
+		
+		boolean votoExiste = votoRepository.findByFilmeIdAndUsuarioId(filmeId, usuarioId)
 				.stream()
 				.anyMatch(votoExistente -> !votoExistente.equals(voto));
 		
-		boolean usuarioExiste = votoRepository.findByUsuario(voto.getUsuario().getId())
-				.stream()
-				.anyMatch(votoExistente -> !votoExistente.equals(voto));
-		
-		if (filmeExiste && usuarioExiste) {
+		if (votoExiste) {
 			throw new NegocioException("Este usuário já  votou neste filme.");
 		}
 		
-		return votoRepository.save(voto);
+		Voto novoVoto = preencheVoto(filmeId, usuarioId,voto);
+		
+		return votoRepository.save(novoVoto);
 	}
 	
-	@Transactional
-	public Voto votar(Long usuarioId, Long filmeId, Integer nota) {
-		
-		Voto voto = new Voto();
+	public Voto preencheVoto(Long filmeId, Long usuarioId, Voto voto) {
 		Usuario usuario = crudUsuarioService.buscar(usuarioId);
 		Filme filme = crudFilmeService.buscar(filmeId);
-		
+				
 		voto.setUsuario(usuario);
-		voto.setNota(limiteNota(nota));
 		voto.setFilme(filme);
 		voto.setDataVoto(OffsetDateTime.now());
 		
 		return voto;
 	}
 	
-	public Integer limiteNota(Integer nota) {
+	public Long limiteNota(Long nota) {
 		if (nota >=0 && nota <=4) {
 			throw new NegocioException("Nota inválida, insira um número entre 0 e 4.");
 		}else

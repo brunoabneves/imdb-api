@@ -7,7 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Range;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,8 +26,9 @@ public class Voto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank
-	private Integer nota;
+	@NotNull
+	@Range(max = 4)
+	private Long nota;
 	
 	@ManyToOne
 	private Usuario usuario;
