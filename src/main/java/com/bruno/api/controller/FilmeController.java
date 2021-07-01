@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,33 +25,33 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/filmes")
+//@RequestMapping("/filmes")
 public class FilmeController {
 	
 	private FilmeRepository filmeRepository;
 	private CrudFilmeService crudFilmeService;
 	private FilmeAssembler filmeAssembler;
 	
-	@GetMapping
+	@GetMapping("/admin/filmes")
 	public List<FilmeModel> listar() {
 		return filmeAssembler.toCollectionModel(filmeRepository.findAll());
 	}
 	
-	@GetMapping("/genero/{genero}")
+	@GetMapping("/filmes/genero/{genero}")
 	public ResponseEntity<FilmeModel> listarPorGenero(@PathVariable String genero) {
 		return filmeRepository.findByGenero(genero)
 				.map(filme ->  ResponseEntity.ok(filmeAssembler.toModel(filme)))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
-	@GetMapping("/nome/{nome}")
+	@GetMapping("/filmes/nome/{nome}")
 	public ResponseEntity<FilmeModel> listarPorNome(@PathVariable String nome) {
 		return filmeRepository.findByNomeContaining(nome)
 				.map(filme ->  ResponseEntity.ok(filmeAssembler.toModel(filme)))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
-	@GetMapping("/diretor/{diretor}")
+	@GetMapping("/filmes/diretor/{diretor}")
 	public ResponseEntity<FilmeModel> listarPorDiretor(@PathVariable String diretor) {
 		return filmeRepository.findByDiretorContaining(diretor)
 				.map(filme ->  ResponseEntity.ok(filmeAssembler.toModel(filme)))
@@ -64,7 +63,7 @@ public class FilmeController {
 		return filmeRepository.findByAtorContaining(ator);
 	}*/
 	
-	@PostMapping
+	@PostMapping("/admim/filmes")
 	@PreAuthorize("hasRole('ADMIN')")
 	@ResponseStatus(HttpStatus.CREATED)
 	public FilmeModel cadastrar (@Valid @RequestBody FilmeInput filmeInput) {
