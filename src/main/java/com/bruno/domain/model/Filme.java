@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -31,6 +32,9 @@ public class Filme {
 	
 	private String genero;
 	
+	@Transient
+	private Long mediaVotos;
+	
 	@OneToMany(mappedBy = "filme", cascade = CascadeType.ALL)
 	private List<Ator> ator = new ArrayList<>();
 	
@@ -42,6 +46,5 @@ public class Filme {
 		this.getAtor().add(ator);
 		
 		return ator;
-	}
-	
+	}	
 }

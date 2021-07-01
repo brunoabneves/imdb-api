@@ -20,6 +20,7 @@ import com.bruno.api.model.input.FilmeInput;
 import com.bruno.domain.model.Filme;
 import com.bruno.domain.repository.FilmeRepository;
 import com.bruno.domain.service.CrudFilmeService;
+import com.bruno.domain.service.VotarService;
 
 import lombok.AllArgsConstructor;
 
@@ -31,10 +32,19 @@ public class FilmeController {
 	private FilmeRepository filmeRepository;
 	private CrudFilmeService crudFilmeService;
 	private FilmeAssembler filmeAssembler;
+	VotarService votarService;
 	
 	@GetMapping("/admin/filmes")
 	public List<FilmeModel> listar() {
 		return filmeAssembler.toCollectionModel(filmeRepository.findAll());
+	}
+	
+	@GetMapping("/admin/filmes/{filmeId}")
+	public ResponseEntity<FilmeModel> buscar(@PathVariable Long filmeId) {
+		crudFilmeService.mediaVoto(filmeId);
+		return filmeRepository.findById(filmeId)
+				.map(filme ->  ResponseEntity.ok(filmeAssembler.toModel(filme)))
+				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@GetMapping("/filmes/genero/{genero}")

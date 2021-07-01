@@ -1,6 +1,7 @@
 package com.bruno.api.assembler;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -30,5 +31,10 @@ public class FilmeAssembler {
 	
 	public Filme toEntity(FilmeInput filmeInput) {
 		return modelMapper.map(filmeInput, Filme.class);
+	}
+
+	public Filme toEntity(Optional<Filme> filme) {
+
+		return modelMapper.map(filme, Filme.class);
 	}
 }

@@ -46,7 +46,7 @@ public class UsuarioController {
 		return usuarioAssembler.toCollectionModel(usuarioRepository.findAll());
 	}
 	
-	@GetMapping("/admin/usuarios/listaUserComunInativo")
+	@GetMapping("/admin/usuarios/lista-user-comun-inativo")
 	public List<UsuarioModel> listarUserComunInativo(boolean admin, boolean ativo) {
 		return usuarioAssembler.toCollectionModel(usuarioRepository.findByAdministradorAndAtivo(false,true));
 	}

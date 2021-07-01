@@ -47,12 +47,28 @@ public class VotarService {
 		
 		return voto;
 	}
+
+//	public ResponseEntity<FilmeModel> adicionaMedia (Long filmeId) {
+//		
+//		Filme filme = filmeAssembler.toEntity(filmeRepository.findById(filmeId));
+//		
+//		Filme filmeEditado = new Filme();
+//		
+//		filmeEditado.setId(filmeId);
+//		filmeEditado.setGenero(filme.getGenero());
+//		filmeEditado.setNome(filme.getNome());
+//		filmeEditado.setDiretor(filme.getDiretor());
+//		filmeEditado.setAtor(filme.getAtor());
+//		filmeEditado.setMediaVotos(15L);
+//		
+//		return ResponseEntity.ok(filmeAssembler.toModel(crudFilmeService.salvar(filmeEditado)));
+//	}
 	
-	public Long limiteNota(Long nota) {
-		if (nota >=0 && nota <=4) {
-			throw new NegocioException("Nota inválida, insira um número entre 0 e 4.");
-		}else
-		
-		return nota;
-	}
+//	public Long limiteNota(Long nota) {
+//		if (nota >=0 && nota <=4) {
+//			throw new NegocioException("Nota inválida, insira um número entre 0 e 4.");
+//		}else
+//		
+//		return nota;
+//	}
 }
