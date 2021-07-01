@@ -46,6 +46,11 @@ public class UsuarioController {
 		return usuarioAssembler.toCollectionModel(usuarioRepository.findAll());
 	}
 	
+	@GetMapping("/admin/usuarios/listaUserComunInativo")
+	public List<UsuarioModel> listarUserComunInativo(boolean admin, boolean ativo) {
+		return usuarioAssembler.toCollectionModel(usuarioRepository.findByAdministradorAndAtivo(false,true));
+	}
+	
 	@PostMapping("/usuarios")
 	@ResponseStatus(HttpStatus.CREATED)
 	public UsuarioModel cadastrar (@Valid @RequestBody UsuarioInput usuarioInput) {
