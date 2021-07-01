@@ -11,6 +11,6 @@ public class UsuarioModel {
 	private String nome;
 	private String username;
 	//private String senha;
-	private String administrador;
+	private boolean administrador;
 	
 }

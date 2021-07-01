@@ -7,7 +7,8 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,6 +18,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@SQLDelete(sql = "update usuario set ativo = 0 where id = ?")
+@Where(clause = "ativo = 1")
 public class Usuario {
 
 	@EqualsAndHashCode.Include
@@ -38,5 +41,7 @@ public class Usuario {
 	private String senha;
 	
 	private boolean administrador;
+	
+	private boolean ativo;
 	
 }

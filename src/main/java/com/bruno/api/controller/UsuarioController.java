@@ -46,14 +46,14 @@ public class UsuarioController {
 		return usuarioAssembler.toCollectionModel(usuarioRepository.findAll());
 	}
 	
-	@PostMapping
+	@PostMapping("/usuarios")
 	@ResponseStatus(HttpStatus.CREATED)
 	public UsuarioModel cadastrar (@Valid @RequestBody UsuarioInput usuarioInput) {
 		Usuario novoUsuario = usuarioAssembler.toEntity(usuarioInput);
 		return usuarioAssembler.toModel(crudUsuarioService.salvar(novoUsuario));
 	}
 	
-	@PutMapping("/{usuarioId}")
+	@PutMapping("/usuarios/{usuarioId}")
 	public ResponseEntity<UsuarioModel> editar (@Valid @PathVariable Long usuarioId, @RequestBody UsuarioInput usuarioInput) {
 		if(!usuarioRepository.existsById(usuarioId)) {
 			return ResponseEntity.notFound().build();
@@ -67,7 +67,7 @@ public class UsuarioController {
 	}
 	
 	//implementar exclusão lógica
-	@DeleteMapping("/{usuarioId}")
+	@DeleteMapping("/usuarios/{usuarioId}")
 	public ResponseEntity<Void> deletar(@PathVariable Long usuarioId) {
 
 		if (!usuarioRepository.existsById(usuarioId)) {

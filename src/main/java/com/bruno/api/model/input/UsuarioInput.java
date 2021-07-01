@@ -21,9 +21,10 @@ public class UsuarioInput {
 	private String username;
 	
 	@NotBlank
-	@JsonIgnore
 	private String senha;
 	
 	private boolean administrador;
+	
+	private boolean ativo = true;
 	
 }
