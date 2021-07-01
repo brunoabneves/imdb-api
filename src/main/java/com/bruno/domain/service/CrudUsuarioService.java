@@ -22,12 +22,12 @@ public class CrudUsuarioService {
 	
 	@Transactional
 	public Usuario salvar(Usuario usuario) {
-		boolean emailEmUso = usuarioRepository.findByEmail(usuario.getEmail())
+		boolean usernameEmUso = usuarioRepository.findByUsername(usuario.getUsername())
 				.stream()
 				.anyMatch(usuarioExistente -> !usuarioExistente.equals(usuario));
 		
-		if (emailEmUso) {
-			throw new NegocioException("Já existe um usuário cadastrado com este e-mail.");
+		if (usernameEmUso) {
+			throw new NegocioException("Já existe um usuário cadastrado com este username.");
 		}
 		
 		return usuarioRepository.save(usuario);

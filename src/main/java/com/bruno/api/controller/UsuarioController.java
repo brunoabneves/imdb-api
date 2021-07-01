@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +21,7 @@ import com.bruno.api.assembler.UsuarioAssembler;
 import com.bruno.api.model.UsuarioModel;
 import com.bruno.api.model.input.UsuarioInput;
 import com.bruno.domain.model.Usuario;
+import com.bruno.domain.repository.UsuarioPaginadoRepository;
 import com.bruno.domain.repository.UsuarioRepository;
 import com.bruno.domain.service.CrudUsuarioService;
 
@@ -31,8 +33,14 @@ import lombok.AllArgsConstructor;
 public class UsuarioController {
 	
 	private UsuarioRepository usuarioRepository;
+	private UsuarioPaginadoRepository usuarioPaginadoRepository;
 	private CrudUsuarioService crudUsuarioService;
 	private UsuarioAssembler usuarioAssembler;
+	
+	@GetMapping("/paginado")
+	public List<UsuarioModel> listarPaginado(Pageable pageable) {
+		return usuarioAssembler.toPageModel(usuarioPaginadoRepository.findAll(pageable));
+	}
 	
 	//método apenas de teste
 	@GetMapping

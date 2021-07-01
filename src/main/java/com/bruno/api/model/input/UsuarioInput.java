@@ -1,8 +1,9 @@
 package com.bruno.api.model.input;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,8 +17,13 @@ public class UsuarioInput {
 	private String nome;
 	
 	@NotBlank
-	@Email
-	@Size(max = 255)
-	private String email;
+	@Size(max = 20)
+	private String username;
+	
+	@NotBlank
+	@JsonIgnore
+	private String senha;
+	
+	private boolean administrador;
 	
 }

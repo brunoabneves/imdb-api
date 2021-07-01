@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.bruno.api.model.UsuarioModel;
@@ -24,6 +25,12 @@ private ModelMapper modelMapper;
 	
 	public List<UsuarioModel> toCollectionModel(List<Usuario> usuarios) {
 		return usuarios.stream()
+				.map(this::toModel)
+				.collect(Collectors.toList());
+	}
+	
+	public List<UsuarioModel> toPageModel(Page<Usuario> page) {
+		return page.stream()
 				.map(this::toModel)
 				.collect(Collectors.toList());
 	}

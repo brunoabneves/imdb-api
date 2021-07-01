@@ -10,5 +10,7 @@ import com.bruno.domain.model.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 	
-	Optional<Usuario> findByEmail(String email);
+	//Optional<Usuario> findByEmail(String email);
+
+	Optional<Usuario> findByUsername(String username);
 }

@@ -3,6 +3,7 @@ package com.bruno.api.controller;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/filmes/{filmeId}/{usuarioId}/votar")
+@RequestMapping("/filmes/{filmeId}/{usuarioId}/voto")
 public class VotoController {
 
 	private VotarService votarService;
@@ -29,6 +30,7 @@ public class VotoController {
 	}*/
 	
 	@PostMapping
+	@PreAuthorize("hasRole('USER')")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Voto cadastrarVoto(@PathVariable Long filmeId, @PathVariable Long usuarioId, @Valid @RequestBody Voto voto) {
 		return votarService.votar(filmeId, usuarioId,voto);
