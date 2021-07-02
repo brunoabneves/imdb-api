@@ -9,9 +9,9 @@ public class FilmeModel {
 
 	private Long id;
 	private String nome;
-	//private String nomeAtor;
 	private String genero;
 	private String diretor;
 	private Long mediaVotos;
+	private AtorModel ator;
 	
 }

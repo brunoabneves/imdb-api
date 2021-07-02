@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 @Component
 public class UsuarioAssembler {
 
-private ModelMapper modelMapper;
+	private ModelMapper modelMapper;
 	
 	public UsuarioModel toModel(Usuario usuario) {
 		return modelMapper.map(usuario, UsuarioModel.class);

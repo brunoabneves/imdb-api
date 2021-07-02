@@ -1,8 +1,6 @@
 package com.bruno.api.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -38,18 +36,7 @@ public class FilmeController {
 	
 	@GetMapping("/admin/filmes")
 	public List<FilmeModel> listar() {
-		
-		List<FilmeModel> filmes = filmeAssembler.toCollectionModel(filmeRepository.findAll());
-		
-		List<Long> listaId = new ArrayList<>();
-		
-		//pega os ids de todos os filmes e salva no arrya listasId
-		filmes.stream().map(n -> listaId.add(n.getId())).collect(Collectors.toList());
-		
-		for (Long filmeId : listaId) {
-			crudFilmeService.mediaVoto(filmeId);
-		}
-		
+		crudFilmeService.adicionaMediVotos();
 		return filmeAssembler.toCollectionModel(filmeRepository.findAll());
 	}
 	
@@ -61,31 +48,26 @@ public class FilmeController {
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
-	@GetMapping("/filmes/genero/{genero}")
-	public ResponseEntity<FilmeModel> listarPorGenero(@PathVariable String genero) {
-		return filmeRepository.findByGenero(genero)
-				.map(filme ->  ResponseEntity.ok(filmeAssembler.toModel(filme)))
-				.orElse(ResponseEntity.notFound().build());
+	@GetMapping("/admin/filmes/genero/{genero}")
+	public List<FilmeModel> listarPorGenero(@PathVariable String genero) {
+		return filmeAssembler.toCollectionModel(filmeRepository.findByGenero(genero));
+
 	}
 	
-	@GetMapping("/filmes/nome/{nome}")
-	public ResponseEntity<FilmeModel> listarPorNome(@PathVariable String nome) {
-		return filmeRepository.findByNomeContaining(nome)
-				.map(filme ->  ResponseEntity.ok(filmeAssembler.toModel(filme)))
-				.orElse(ResponseEntity.notFound().build());
+	@GetMapping("/admin/filmes/nome/{nome}")
+	public List<FilmeModel> listarPorNome(@PathVariable String nome) {
+		return filmeAssembler.toCollectionModel(filmeRepository.findByNomeContaining(nome));
 	}
 	
-	@GetMapping("/filmes/diretor/{diretor}")
-	public ResponseEntity<FilmeModel> listarPorDiretor(@PathVariable String diretor) {
-		return filmeRepository.findByDiretorContaining(diretor)
-				.map(filme ->  ResponseEntity.ok(filmeAssembler.toModel(filme)))
-				.orElse(ResponseEntity.notFound().build());
+	@GetMapping("/admin/filmes/diretor/{diretor}")
+	public List<FilmeModel> listarPorDiretor(@PathVariable String diretor) {
+		return filmeAssembler.toCollectionModel(filmeRepository.findByDiretorContaining(diretor));
 	}
 	
-	/*@GetMapping("/ator/{ator}")
-	public List<Filme> listarPorAtor(@PathVariable String ator) {
-		return filmeRepository.findByAtorContaining(ator);
-	}*/
+	@GetMapping("/admin/filmes/ator/{ator}")
+	public List<FilmeModel> listarPorAtor(@PathVariable String ator) {
+		return crudFilmeService.buscaFilmeByAtor(ator);
+	}
 	
 	@PostMapping("/admim/filmes")
 	@PreAuthorize("hasRole('ADMIN')")

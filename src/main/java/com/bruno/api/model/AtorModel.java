@@ -9,4 +9,5 @@ public class AtorModel {
 	
 	private Long id;
 	private String nome;
+	private FilmeModel filme;
 }
