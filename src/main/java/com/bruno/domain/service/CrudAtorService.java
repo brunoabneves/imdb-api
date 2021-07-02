@@ -33,4 +33,5 @@ public class CrudAtorService {
 	public void excluir(Long atorId) {
 		atorRepository.deleteById(atorId);
 	}
+	
 }

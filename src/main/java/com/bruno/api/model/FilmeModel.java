@@ -12,6 +12,4 @@ public class FilmeModel {
 	private String genero;
 	private String diretor;
 	private Long mediaVotos;
-	private AtorModel ator;
-	
 }

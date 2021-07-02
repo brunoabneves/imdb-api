@@ -43,4 +43,8 @@ public class FilmeAssembler {
 				.map(this::toModel)
 				.collect(Collectors.toList());
 	}
+
+	public FilmeModel toModel(Optional<Filme> filme) {
+		return modelMapper.map(filme, FilmeModel.class);
+	}
 }

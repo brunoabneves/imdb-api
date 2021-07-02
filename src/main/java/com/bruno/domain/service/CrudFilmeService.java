@@ -13,10 +13,8 @@ import com.bruno.api.model.AtorModel;
 import com.bruno.api.model.FilmeModel;
 import com.bruno.domain.exception.NegocioException;
 import com.bruno.domain.model.Filme;
-import com.bruno.domain.model.Voto;
 import com.bruno.domain.repository.AtorRepository;
 import com.bruno.domain.repository.FilmeRepository;
-import com.bruno.domain.repository.VotoRepository;
 
 import lombok.AllArgsConstructor;
 
@@ -26,7 +24,6 @@ public class CrudFilmeService {
 
 	private FilmeRepository filmeRepository;
 	private FilmeAssembler filmeAssembler;
-	private VotoRepository votoRepository;
 	private AtorAssembler atorAssembler;
 	private AtorRepository atorRepository;
 	
@@ -48,42 +45,10 @@ public class CrudFilmeService {
 				.orElseThrow(() -> new NegocioException("Filme não encontrado"));
 	}
 	
-	@Transactional
-	public void mediaVoto(Long filmeId) {
-		Filme filme = buscar(filmeId);
-		
-		mediaFilme(filmeId);
-		
-		filme.setMediaVotos(mediaFilme(filmeId));
-	}
-	
-	/*public Filme buscarPorAtor(String ator) {
-		return filmeRepository.findByAtor(ator)
-				.orElseThrow(() -> new NegocioException("Filme não encontrado"));
-	}*/
-	
 	public void excluir(Long filmeId) {
 		filmeRepository.deleteById(filmeId);
 	}
 	
-	
-	public Long mediaFilme(Long filmeId) {
-		List<Voto> votos = votoRepository.findAllByFilmeId(filmeId);
-		Long valorTotal = 0L;
-		
-		int size = votos.size();
-		
-		for(int i =0; i< size; i++){		
-			valorTotal = votos.get(i).getNota() + valorTotal;
-		}
-		
-		if(valorTotal > 0L) {
-			Long media = valorTotal/size;
-			return media;
-		}
-		
-		return 0L;
-	}
 	
 	public List<FilmeModel> buscaFilmeByAtor(String nome) {
 		List<AtorModel> atorModel = atorAssembler.toCollectionModel(atorRepository.findByNomeContaining(nome));
@@ -100,18 +65,31 @@ public class CrudFilmeService {
 		return filmeModel;
 	}
 	
-	public void adicionaMediVotos() {
-		
-		List<FilmeModel> filmes = filmeAssembler.toCollectionModel(filmeRepository.findAll());
-		
-		List<Long> listaId = new ArrayList<>();
-		
-		//pega os ids de todos os filmes e salva no arrya listasId
-		filmes.stream().map(n -> listaId.add(n.getId())).collect(Collectors.toList());
-		
-		for (Long filmeId : listaId) {
-			mediaVoto(filmeId);
-		}
-	}
+
+	
+//	@Transactional
+//	public void preencheAtor() {
+//		//pega todos os filmes
+//		List<FilmeModel> filmes = filmeAssembler.toCollectionModel(filmeRepository.findAll());
+//		
+//		List<Long> listaId = new ArrayList<>();
+//		
+//		filmes.stream().map(n -> listaId.add(n.getId())).collect(Collectors.toList());
+//		
+//		for (Long filmeId : listaId) {
+//			setaAtor(filmeId);
+//		}
+//	}
+//	
+//	@Transactional
+//	public void setaAtor(Long filmeId) {
+//		
+//		List<AtorModel> atores = atorAssembler.toCollectionModel(atorRepository.findByFilmeId(filmeId));
+//		//FilmeModel filmeModel = filmeAssembler.toModel(filmeRepository.findById(filmeId));
+//		AtorModel ator = new AtorModel();
+//		for (AtorModel atorModel : atores) {
+//			
+//		}
+//	}
 
 }
