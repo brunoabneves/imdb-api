@@ -14,8 +14,8 @@ import lombok.AllArgsConstructor;
 @Service
 public class CrudAtorService {
 	
-private AtorRepository atorRepository;
-private CrudFilmeService crudFilmeService;
+	private AtorRepository atorRepository;
+	private CrudFilmeService crudFilmeService;
 	
 	public Ator buscar(Long atorId) {
 		return atorRepository.findById(atorId)

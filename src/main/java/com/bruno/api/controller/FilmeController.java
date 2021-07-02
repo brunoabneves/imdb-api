@@ -1,6 +1,8 @@
 package com.bruno.api.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -36,6 +38,18 @@ public class FilmeController {
 	
 	@GetMapping("/admin/filmes")
 	public List<FilmeModel> listar() {
+		
+		List<FilmeModel> filmes = filmeAssembler.toCollectionModel(filmeRepository.findAll());
+		
+		List<Long> listaId = new ArrayList<>();
+		
+		//pega os ids de todos os filmes e salva no arrya listasId
+		filmes.stream().map(n -> listaId.add(n.getId())).collect(Collectors.toList());
+		
+		for (Long filmeId : listaId) {
+			crudFilmeService.mediaVoto(filmeId);
+		}
+		
 		return filmeAssembler.toCollectionModel(filmeRepository.findAll());
 	}
 	

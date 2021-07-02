@@ -67,7 +67,12 @@ public class CrudFilmeService {
 			valorTotal = votos.get(i).getNota() + valorTotal;
 		}
 		
-		return valorTotal/size;
+		if(valorTotal > 0L) {
+			Long media = valorTotal/size;
+			return media;
+		}
+		
+		return 0L;
 	}
 
 }
