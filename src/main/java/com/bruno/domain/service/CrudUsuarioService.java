@@ -15,8 +15,8 @@ public class CrudUsuarioService {
 
 	private UsuarioRepository usuarioRepository;
 	
-	public Usuario buscar(Long clienteId) {
-		return usuarioRepository.findById(clienteId)
+	public Usuario buscar(Long usuarioId) {
+		return usuarioRepository.findById(usuarioId)
 				.orElseThrow(() -> new NegocioException("Usuário não encontrado"));
 	}
 	

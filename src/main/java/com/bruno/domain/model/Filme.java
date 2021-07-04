@@ -1,5 +1,6 @@
 package com.bruno.domain.model;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,9 @@ public class Filme {
 	
 	private String genero;
 	
+	@OneToMany(mappedBy = "filme", cascade = CascadeType.ALL)
+	private List<Voto> votos = new ArrayList<>();
+	
 	@Transient
 	private Long mediaVotos;
 	
@@ -46,5 +50,18 @@ public class Filme {
 		this.getAtor().add(ator);
 		
 		return ator;
-	}	
+	}
+	
+	public Voto adicionarVoto(Usuario usuario, Long nota) {
+		
+		Voto voto = new Voto();
+		voto.setNota(nota);
+		voto.setDataVoto(OffsetDateTime.now());
+		voto.setFilme(this);
+		voto.setUsuario(usuario);
+		
+		this.getVotos().add(voto);
+		
+		return voto;
+	}
 }

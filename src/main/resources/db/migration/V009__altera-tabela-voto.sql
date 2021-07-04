@@ -1,1 +1,0 @@
-alter table voto add column nota bigint not null;

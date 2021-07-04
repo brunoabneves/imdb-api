@@ -1,4 +1,4 @@
-create table ator (
+create table if not exists ator (
 	id bigint not null auto_increment,
     filme_id bigint not null,
     nome varchar(60),

@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
 
@@ -26,15 +25,14 @@ public class Voto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotNull
 	@Range(max = 4)
 	private Long nota;
 	
 	@ManyToOne
-	private Usuario usuario;
+	private Filme filme;
 	
 	@ManyToOne
-	private Filme filme;
+	private Usuario usuario;
 	
 	private OffsetDateTime dataVoto;
 	

@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,44 +33,44 @@ public class FilmeController {
 	private FilmeAssembler filmeAssembler;
 	private MediaVotosService mediaVotoService;
 	
-	@GetMapping("/admin/filmes")
+	@GetMapping("/filmes")
 	public List<FilmeModel> listar() {
 		
-		mediaVotoService.adicionaMediaVotos();
+		mediaVotoService.preencheMediaVotosNoFindAll();
 		return filmeAssembler.toCollectionModel(filmeRepository.findAll());
 	}
 	
-	@GetMapping("/admin/filmes/{filmeId}")
+	@GetMapping("/filmes/{filmeId}")
 	public ResponseEntity<FilmeModel> buscar(@PathVariable Long filmeId) {
-		mediaVotoService.mediaVoto(filmeId);
+		mediaVotoService.preencheMediaVoto(filmeId);
 		return filmeRepository.findById(filmeId)
 				.map(filme ->  ResponseEntity.ok(filmeAssembler.toModel(filme)))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
-	@GetMapping("/admin/filmes/genero/{genero}")
+	@GetMapping("/filmes/genero/{genero}")
 	public List<FilmeModel> listarPorGenero(@PathVariable String genero) {
 		return filmeAssembler.toCollectionModel(filmeRepository.findByGenero(genero));
 
 	}
 	
-	@GetMapping("/admin/filmes/nome/{nome}")
+	@GetMapping("/filmes/nome/{nome}")
 	public List<FilmeModel> listarPorNome(@PathVariable String nome) {
 		return filmeAssembler.toCollectionModel(filmeRepository.findByNomeContaining(nome));
 	}
 	
-	@GetMapping("/admin/filmes/diretor/{diretor}")
+	@GetMapping("/filmes/diretor/{diretor}")
 	public List<FilmeModel> listarPorDiretor(@PathVariable String diretor) {
 		return filmeAssembler.toCollectionModel(filmeRepository.findByDiretorContaining(diretor));
 	}
 	
-	@GetMapping("/admin/filmes/ator/{ator}")
+	@GetMapping("/filmes/ator/{ator}")
 	public List<FilmeModel> listarPorAtor(@PathVariable String ator) {
 		return crudFilmeService.buscaFilmeByAtor(ator);
 	}
 	
-	@PostMapping("/admim/filmes")
-	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping("/admin/filmes")
+	//@PreAuthorize("hasRole('ADMIN')")
 	@ResponseStatus(HttpStatus.CREATED)
 	public FilmeModel cadastrar (@Valid @RequestBody FilmeInput filmeInput) {
 		Filme novoFilme = filmeAssembler.toEntity(filmeInput);

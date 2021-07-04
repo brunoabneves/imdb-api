@@ -20,12 +20,45 @@ import lombok.AllArgsConstructor;
 @Service
 public class MediaVotosService {
 	
-	private FilmeAssembler filmeAssembler;
 	private VotoRepository votoRepository;
-	private FilmeRepository filmeRepository;
 	private CrudFilmeService crudFilmeService;
+	private FilmeAssembler  filmeAssembler;
+	private FilmeRepository filmeRepository;
+	
+	public Long mediaVoto(Long filmeId) {
+		
+		Long somaNotas = 0L;
+		List<Long> notas = new ArrayList<>();
+		
+		List<Voto> votos = votoRepository.findByFilmeId(filmeId);
 
-	public void adicionaMediaVotos() {
+		//adiciona as notas no array de notas
+		votos.stream().map(n -> notas.add(n.getNota())).collect(Collectors.toList());
+		
+		int size = votos.size();
+		
+		for(Long n : notas) {
+			somaNotas = n + somaNotas;
+		}
+		
+		if(somaNotas > 0L) {
+			Long media = somaNotas/size;
+			return media;
+		}
+		
+		return 0L;
+	}
+	
+	@Transactional
+	public void preencheMediaVoto(Long filmeId) {
+		Filme filme = crudFilmeService.buscar(filmeId);
+		
+		mediaVoto(filmeId);
+		
+		filme.setMediaVotos(mediaVoto(filmeId));
+	}
+	
+	public void preencheMediaVotosNoFindAll() {
 		
 		List<FilmeModel> filmes = filmeAssembler.toCollectionModel(filmeRepository.findAll());
 		
@@ -35,35 +68,7 @@ public class MediaVotosService {
 		filmes.stream().map(n -> listaId.add(n.getId())).collect(Collectors.toList());
 		
 		for (Long filmeId : listaId) {
-			mediaVoto(filmeId);
+			preencheMediaVoto(filmeId);
 		}
 	}
-	
-	public Long mediaFilme(Long filmeId) {
-		List<Voto> votos = votoRepository.findAllByFilmeId(filmeId);
-		Long valorTotal = 0L;
-		
-		int size = votos.size();
-		
-		for(int i =0; i< size; i++){		
-			valorTotal = votos.get(i).getNota() + valorTotal;
-		}
-		
-		if(valorTotal > 0L) {
-			Long media = valorTotal/size;
-			return media;
-		}
-		
-		return 0L;
-	}
-	
-	@Transactional
-	public void mediaVoto(Long filmeId) {
-		Filme filme = crudFilmeService.buscar(filmeId);
-		
-		mediaFilme(filmeId);
-		
-		filme.setMediaVotos(mediaFilme(filmeId));
-	}
-	
 }

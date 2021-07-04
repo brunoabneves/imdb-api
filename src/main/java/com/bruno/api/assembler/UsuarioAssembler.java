@@ -1,6 +1,7 @@
 package com.bruno.api.assembler;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -37,5 +38,9 @@ public class UsuarioAssembler {
 	
 	public Usuario toEntity(UsuarioInput usuarioInput) {
 		return modelMapper.map(usuarioInput, Usuario.class);
+	}
+
+	public Usuario toEntity(Optional<Usuario> usuario) {
+		return modelMapper.map(usuario, Usuario.class);
 	}
 }

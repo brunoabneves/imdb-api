@@ -41,7 +41,7 @@ public class UsuarioController {
 	}
 	
 	//método apenas de teste
-	@GetMapping("/admin/usuarios")
+	@GetMapping("/usuarios")
 	public List<UsuarioModel> listar() {
 		return usuarioAssembler.toCollectionModel(usuarioRepository.findAll());
 	}

@@ -1,8 +1,10 @@
-create table usuario (
+create table if not exists usuario (
 	id bigint not null auto_increment,
-	nome varchar(60) not null,
-    email varchar(255) not null,
-    senha varchar(100),
+    nome varchar(60),
+    username varchar(20),
+    senha varchar(200),
+    administrador boolean,
+    ativo boolean,
     
     primary key (id)
 );
