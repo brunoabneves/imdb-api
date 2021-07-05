@@ -1,0 +1,12 @@
+Api criada usando banco de dados mysql, requsições testadas no POSTMAN.
+As rotas de requisições marcadas com admin, deve-se logar com usuário setado como admin, e copiar o Bearer token.
+
+
+1.O primmeiro usuário administrador deve ser criado manualmente dentro do banco de dados
+
+2.Remover a rota "/admin" para dar permissão ao teste unitário do UsuarioController
+	está assim : @GetMapping("/admin/usuarios/lista-user-comun-inativo")
+	deixar assim: @GetMapping("/usuarios/lista-user-comun-inativo")
+   Após realizar o teste do UsuarioController, adicione novamente a rota "/admin" 	
+
+obs: Espero que gostem.
