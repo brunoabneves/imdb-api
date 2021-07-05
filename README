@@ -9,4 +9,9 @@ As rotas de requisições marcadas com admin, deve-se logar com usuário setado 
 	deixar assim: @GetMapping("/usuarios/lista-user-comun-inativo")
    Após realizar o teste do UsuarioController, adicione novamente a rota "/admin" 	
 
+3. Para retornar a lista de filmes ordenada por ordem alfabetica, basta adicionar "?sort=nome,desc" na rota "/v1/filmes/paginado"
+	ex: "/v1/filmes/paginado?sort=nome,desc"
+	
+	O mesmo vale para listar os usuarios por ordem alfabetica.
+
 obs: Espero que gostem.
