@@ -40,6 +40,10 @@ public class CrudFilmeService {
 		return filmeRepository.save(filme);
 	}
 	
+	public List<Filme> listar() {
+		return filmeRepository.findAll();
+	}
+	
 	public Filme buscar(Long filmeId) {
 		return filmeRepository.findById(filmeId)
 				.orElseThrow(() -> new NegocioException("Filme não encontrado"));
@@ -64,32 +68,5 @@ public class CrudFilmeService {
 		
 		return filmeModel;
 	}
-	
-
-	
-//	@Transactional
-//	public void preencheAtor() {
-//		//pega todos os filmes
-//		List<FilmeModel> filmes = filmeAssembler.toCollectionModel(filmeRepository.findAll());
-//		
-//		List<Long> listaId = new ArrayList<>();
-//		
-//		filmes.stream().map(n -> listaId.add(n.getId())).collect(Collectors.toList());
-//		
-//		for (Long filmeId : listaId) {
-//			setaAtor(filmeId);
-//		}
-//	}
-//	
-//	@Transactional
-//	public void setaAtor(Long filmeId) {
-//		
-//		List<AtorModel> atores = atorAssembler.toCollectionModel(atorRepository.findByFilmeId(filmeId));
-//		//FilmeModel filmeModel = filmeAssembler.toModel(filmeRepository.findById(filmeId));
-//		AtorModel ator = new AtorModel();
-//		for (AtorModel atorModel : atores) {
-//			
-//		}
-//	}
 
 }

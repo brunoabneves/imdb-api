@@ -1,5 +1,7 @@
 package com.bruno.domain.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,10 @@ public class CrudAtorService {
 	public Ator buscar(Long atorId) {
 		return atorRepository.findById(atorId)
 				.orElseThrow(() -> new NegocioException("Ator não encontrado"));
+	}
+	
+	public List<Ator> listar() {
+		return atorRepository.findAll();
 	}
 	
 	@Transactional

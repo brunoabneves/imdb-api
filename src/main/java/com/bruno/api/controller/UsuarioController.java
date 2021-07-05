@@ -46,7 +46,8 @@ public class UsuarioController {
 		return usuarioAssembler.toCollectionModel(usuarioRepository.findAll());
 	}
 	
-	@GetMapping("/admin/usuarios/lista-user-comun-inativo")
+	//remover a rota "/admin" para dar permissão ao teste unitário do controller
+	@GetMapping("/usuarios/lista-user-comun-inativo")
 	public List<UsuarioModel> listarUserComunInativo(boolean admin, boolean ativo) {
 		return usuarioAssembler.toCollectionModel(usuarioRepository.findByAdministradorAndAtivo(false,true));
 	}

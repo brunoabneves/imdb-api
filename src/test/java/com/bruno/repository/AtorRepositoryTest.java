@@ -13,6 +13,7 @@ import com.bruno.domain.model.Ator;
 import com.bruno.domain.model.Filme;
 import com.bruno.domain.repository.AtorRepository;
 import com.bruno.domain.repository.FilmeRepository;
+import com.bruno.util.AtorCreator;
 
 @DataJpaTest
 @DisplayName("Testes para o AtorRepository")
@@ -27,7 +28,7 @@ public class AtorRepositoryTest {
 	@Test
 	@DisplayName("'delete By Id ' retorna uma lista vazia quando bem sucedido")
 	void deleteById_RetornaListaVazia_QuandoBemSucedido() {
-		Ator ator = criaAtor();
+		Ator ator = AtorCreator.criaAtorASerSalvo();
 		
 		Filme filmeSalvo = this.filmeRepository.save(ator.getFilme());
 		
@@ -42,7 +43,7 @@ public class AtorRepositoryTest {
 	@DisplayName("'Find By Id' retorna uma lista de atores quando bem sucedido")
 	void findById_RetornaListaDeAtores_QuandoBemSucedido() {
 		
-		Ator ator = criaAtor();
+		Ator ator = AtorCreator.criaAtorASerSalvo();
 		
 		Filme filmeSalvo = this.filmeRepository.save(ator.getFilme());
 		
@@ -57,7 +58,7 @@ public class AtorRepositoryTest {
 	@Test
 	@DisplayName("'Find By Nome Containing' retorna uma lista de ator quando bem sucedido")
 	void findByNomeContainig_RetornaListaDeAtor_QuandoBemSucedido() {
-		Ator ator = criaAtor();
+		Ator ator = AtorCreator.criaAtorASerSalvo();
 		
 		Filme filmeSalvo = this.filmeRepository.save(ator.getFilme());
 		
@@ -79,25 +80,5 @@ public class AtorRepositoryTest {
 		Assertions.assertThat(atores).isEmpty();
 
 	}
-	
-	private Ator criaAtor() {
-		Ator ator = new Ator();
-		ator.setNome("Vigo Mortense");
-		ator.setFilme(criaFilme());
 		
-		ator.getFilme().getAtor().add(ator);
-		
-		return ator;
-	}
-	
-	private Filme criaFilme() {
-		
-		Filme filme = new Filme();
-
-		filme.setNome("Liga da Justiça");
-		filme.setDiretor("Zack Snyder");
-		filme.setGenero("Héroi");
-		
-		return filme;
-	}
 }

@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.bruno.domain.model.Filme;
 import com.bruno.domain.repository.FilmeRepository;
+import com.bruno.util.FilmeCreator;
 
 @DataJpaTest
 @DisplayName("Testes para o FilmeRepository")
@@ -22,7 +23,7 @@ class FilmeRepositoryTest {
 	@Test
 	@DisplayName("'save' cria um filme quando bem sucedido")
 	void save_PersistirFilme_QuandoBemSucedido() {
-		Filme filmeASerSalvo = criaFilme();
+		Filme filmeASerSalvo = FilmeCreator.criaFilmeASerSalvo();
 		Filme filmeSalvo = this.filmeRepository.save(filmeASerSalvo);
 		
 		Assertions.assertThat(filmeSalvo).isNotNull();
@@ -33,7 +34,7 @@ class FilmeRepositoryTest {
 	@Test
 	@DisplayName("'Atualizar' atualiza um filme quando bem sucedido")
 	void update_AtualizaFilme_QuandoBemSucedido() {
-		Filme filmeASerSalvo = criaFilme();
+		Filme filmeASerSalvo = FilmeCreator.criaFilmeASerSalvo();
 		Filme filmeSalvo = this.filmeRepository.save(filmeASerSalvo);
 		
 		Assertions.assertThat(filmeSalvo).isNotNull();
@@ -54,7 +55,7 @@ class FilmeRepositoryTest {
 	@Test
 	@DisplayName("'Find By Nome' retorna uma lista de filme quando bem sucedido")
 	void findByNome_RetornaListaDeFilme_QuandoBemSucedido() {
-		Filme filmeASerSalvo = criaFilme();
+		Filme filmeASerSalvo = FilmeCreator.criaFilmeASerSalvo();
 		
 		Filme filmeSalvo = this.filmeRepository.save(filmeASerSalvo);
 		
@@ -72,7 +73,7 @@ class FilmeRepositoryTest {
 	@Test
 	@DisplayName("'Find By Nome Containing' retorna uma lista de filme quando bem sucedido")
 	void findByNomeContainig_RetornaListaDeFilme_QuandoBemSucedido() {
-		Filme filmeASerSalvo = criaFilme();
+		Filme filmeASerSalvo = FilmeCreator.criaFilmeASerSalvo();
 		
 		Filme filmeSalvo = this.filmeRepository.save(filmeASerSalvo);
 		
@@ -88,7 +89,7 @@ class FilmeRepositoryTest {
 	@Test
 	@DisplayName("'Find By Diretor Containing' retorna uma lista de filme quando bem sucedido")
 	void findByDiretorContainig_RetornaListaDeFilme_QuandoBemSucedido() {
-		Filme filmeASerSalvo = criaFilme();
+		Filme filmeASerSalvo = FilmeCreator.criaFilmeASerSalvo();
 		
 		Filme filmeSalvo = this.filmeRepository.save(filmeASerSalvo);
 		
@@ -104,7 +105,7 @@ class FilmeRepositoryTest {
 	@Test
 	@DisplayName("'Find By Genero' retorna uma lista de filme quando bem sucedido")
 	void findByGenero_RetornaListaDeFilme_QuandoBemSucedido() {
-		Filme filmeASerSalvo = criaFilme();
+		Filme filmeASerSalvo = FilmeCreator.criaFilmeASerSalvo();
 		
 		Filme filmeSalvo = this.filmeRepository.save(filmeASerSalvo);
 		
@@ -162,7 +163,7 @@ class FilmeRepositoryTest {
 	@Test
 	@DisplayName("'Find By Id' retorna uma lista de filme quando bem sucedido")
 	void findById_RetornaListaDeFilme_QuandoBemSucedido() {
-		Filme filmeASerSalvo = criaFilme();
+		Filme filmeASerSalvo = FilmeCreator.criaFilmeASerSalvo();
 		
 		Filme filmeSalvo = this.filmeRepository.save(filmeASerSalvo);
 		
@@ -172,14 +173,5 @@ class FilmeRepositoryTest {
 		Assertions.assertThat(filmes).isNotNull();
 		Assertions.assertThat(filmes).contains(filmeSalvo);
 
-	}
-	
-	private Filme criaFilme() {
-		Filme filme = new Filme();
-		filme.setNome("Liga da Justiça");
-		filme.setDiretor("Zack Snyder");
-		filme.setGenero("Héroi");
-		
-		return filme;
 	}
 }

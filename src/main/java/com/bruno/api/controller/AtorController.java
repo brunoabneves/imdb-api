@@ -14,11 +14,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bruno.api.assembler.AtorAssembler;
-import com.bruno.api.assembler.FilmeAssembler;
 import com.bruno.api.model.AtorModel;
 import com.bruno.domain.model.Ator;
-import com.bruno.domain.repository.AtorRepository;
-import com.bruno.domain.repository.FilmeRepository;
 import com.bruno.domain.service.CrudAtorService;
 
 import lombok.AllArgsConstructor;
@@ -29,14 +26,11 @@ import lombok.AllArgsConstructor;
 public class AtorController {
 
 	private CrudAtorService crudAtorService;
-	private AtorRepository atorRepository;
 	private AtorAssembler atorAssembler;
-	FilmeRepository filmeRepository;
-	FilmeAssembler filmeAssembler;
 	
 	@GetMapping
 	public List<AtorModel> listar() {
-		return atorAssembler.toCollectionModel(atorRepository.findAll());
+		return atorAssembler.toCollectionModel(crudAtorService.listar());
 	}
 	
 	@PostMapping("/{filmeId}")

@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.bruno.domain.model.Usuario;
 import com.bruno.domain.repository.UsuarioRepository;
+import com.bruno.util.UsuarioCreator;
 
 @DataJpaTest
 @DisplayName("Testes para o UsuarioRepository")
@@ -22,7 +23,7 @@ public class UsuarioRepositoryTest {
 	@Test
 	@DisplayName("'save' cria um usuario quando bem sucedido")
 	void save_PersistirUsuario_QuandoBemSucedido() {
-		Usuario usuarioASerSalvo = criaUsuario();
+		Usuario usuarioASerSalvo = UsuarioCreator.criaUsuarioASerSalvo();
 		Usuario usuarioSalvo = this.usuarioRepository.save(usuarioASerSalvo);
 		
 		Assertions.assertThat(usuarioSalvo).isNotNull();
@@ -37,7 +38,7 @@ public class UsuarioRepositoryTest {
 	@Test
 	@DisplayName("'Atualizar' atualiza um usuario quando bem sucedido")
 	void update_AtualizaUsuario_QuandoBemSucedido() {
-		Usuario usuarioASerSalvo = criaUsuario();
+		Usuario usuarioASerSalvo = UsuarioCreator.criaUsuarioASerSalvo();
 		Usuario usuarioSalvo = this.usuarioRepository.save(usuarioASerSalvo);
 		
 		Assertions.assertThat(usuarioSalvo).isNotNull();
@@ -62,7 +63,7 @@ public class UsuarioRepositoryTest {
 	@Test
 	@DisplayName("'delete By Id ' realiza a exclusão lógica de um usuario quando bem sucedido")
 	void deleteById_ExclusaoLogica_QuandoBemSucedido() {
-		Usuario usuarioASerSalvo = criaUsuario();
+		Usuario usuarioASerSalvo = UsuarioCreator.criaUsuarioASerSalvo();
 		
 		Usuario usuarioSalvo = this.usuarioRepository.save(usuarioASerSalvo);
 		
@@ -76,7 +77,7 @@ public class UsuarioRepositoryTest {
 	@Test
 	@DisplayName("'exists By Id ' retorna true se usuário existe quando bem sucedido")
 	void existsById_RetornaTrue_QuandoBemSucedido() {
-		Usuario usuarioASerSalvo = criaUsuario();
+		Usuario usuarioASerSalvo = UsuarioCreator.criaUsuarioASerSalvo();
 		Usuario usuarioSalvo = this.usuarioRepository.save(usuarioASerSalvo);
 		
 		Long id = usuarioSalvo.getId();
@@ -89,7 +90,7 @@ public class UsuarioRepositoryTest {
 	@Test
 	@DisplayName("'Find By Adiministrador And Ativo' retorna uma lista de usuario quando bem sucedido")
 	void findByAdministradorAndAtivo_RetornaListaDeUsuario_QuandoBemSucedido() {
-		Usuario usuarioASerSalvo = criaUsuario();
+		Usuario usuarioASerSalvo = UsuarioCreator.criaUsuarioASerSalvo();
 		
 		Usuario usuarioSalvo = this.usuarioRepository.save(usuarioASerSalvo);
 		
@@ -107,7 +108,7 @@ public class UsuarioRepositoryTest {
 	@Test
 	@DisplayName("'Find By Username' retorna um usuário quando bem sucedido")
 	void findByUsername_RetornaListaDeUsuario_QuandoBemSucedido() {
-		Usuario usuarioASerSalvo = criaUsuario();
+		Usuario usuarioASerSalvo = UsuarioCreator.criaUsuarioASerSalvo();
 		
 		Usuario usuarioSalvo = this.usuarioRepository.save(usuarioASerSalvo);
 		
@@ -148,16 +149,5 @@ public class UsuarioRepositoryTest {
 		
 		Assertions.assertThat(usuarios).isEmpty();
 
-	}
-	
-	private Usuario criaUsuario() {
-		Usuario usuario = new Usuario();
-		usuario.setNome("Anakin Skywalker");
-		usuario.setUsername("darthVader");
-		usuario.setSenha("executeOrder66");
-		usuario.setAdministrador(false);
-		usuario.setAtivo(true);
-		
-		return usuario;
 	}
 }

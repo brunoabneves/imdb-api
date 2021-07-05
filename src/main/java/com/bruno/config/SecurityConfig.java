@@ -35,7 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.cors().and().csrf().disable().authorizeRequests()
 				.antMatchers(HttpMethod.GET, SIGN_UP_URL).permitAll()
-				.antMatchers("/filmes/**").hasRole("USER")
 				.antMatchers("/protected/**").hasRole("USER")
 				.antMatchers("/admin/**").hasRole("ADMIN")
 				.and()

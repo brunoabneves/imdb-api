@@ -37,12 +37,14 @@ public class FilmeController {
 	public List<FilmeModel> listar() {
 		
 		mediaVotoService.preencheMediaVotosNoFindAll();
-		return filmeAssembler.toCollectionModel(filmeRepository.findAll());
+		return filmeAssembler.toCollectionModel(crudFilmeService.listar());
 	}
 	
 	@GetMapping("/filmes/{filmeId}")
 	public ResponseEntity<FilmeModel> buscar(@PathVariable Long filmeId) {
+		
 		mediaVotoService.preencheMediaVoto(filmeId);
+		
 		return filmeRepository.findById(filmeId)
 				.map(filme ->  ResponseEntity.ok(filmeAssembler.toModel(filme)))
 				.orElse(ResponseEntity.notFound().build());
@@ -70,7 +72,6 @@ public class FilmeController {
 	}
 	
 	@PostMapping("/admin/filmes")
-	//@PreAuthorize("hasRole('ADMIN')")
 	@ResponseStatus(HttpStatus.CREATED)
 	public FilmeModel cadastrar (@Valid @RequestBody FilmeInput filmeInput) {
 		Filme novoFilme = filmeAssembler.toEntity(filmeInput);
