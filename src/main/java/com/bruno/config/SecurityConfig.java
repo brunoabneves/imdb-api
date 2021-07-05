@@ -35,8 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.cors().and().csrf().disable().authorizeRequests()
 				.antMatchers(HttpMethod.GET, SIGN_UP_URL).permitAll()
-				.antMatchers("/protected/**").hasRole("USER")
-				.antMatchers("/admin/**").hasRole("ADMIN")
+				.antMatchers("/*/admin/**").hasRole("ADMIN")
 				.and()
 				.addFilter(new JWTAuthenticationFilter(authenticationManager()))
 				.addFilter(new JWTAuthorizationFilter(authenticationManager(), customUsuarioService));

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,6 +29,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
+@RequestMapping("/v1")
 public class UsuarioController {
 	
 	private UsuarioRepository usuarioRepository;
@@ -35,22 +37,21 @@ public class UsuarioController {
 	private CrudUsuarioService crudUsuarioService;
 	private UsuarioAssembler usuarioAssembler;
 	
-	@GetMapping("/admin/usuarios/paginado")
+	@GetMapping("/usuarios/paginado")
 	public List<UsuarioModel> listarPaginado(Pageable pageable) {
 		return usuarioAssembler.toPageModel(usuarioPaginadoRepository.findAll(pageable));
 	}
 	
-	//método apenas de teste
 	@GetMapping("/usuarios")
 	public List<UsuarioModel> listar() {
 		return usuarioAssembler.toCollectionModel(usuarioRepository.findAll());
 	}
 	
 	//remover a rota "/admin" para dar permissão ao teste unitário do controller
-	@GetMapping("/usuarios/lista-user-comun-inativo")
-	public List<UsuarioModel> listarUserComunInativo(boolean admin, boolean ativo) {
+	@GetMapping("/admin/usuarios/lista-user-comun-ativo")
+	public List<UsuarioModel> listarUserComunAnativo(boolean admin, boolean ativo) {
 		return usuarioAssembler.toCollectionModel(usuarioRepository.findByAdministradorAndAtivo(false,true));
-	}
+	}	
 	
 	@PostMapping("/usuarios")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -72,7 +73,7 @@ public class UsuarioController {
 		return ResponseEntity.ok(usuarioAssembler.toModel(crudUsuarioService.salvar(usuarioEditado)));
 	}
 	
-	//implementar exclusão lógica
+	//Exclusão lógica
 	@DeleteMapping("/usuarios/{usuarioId}")
 	public ResponseEntity<Void> deletar(@PathVariable Long usuarioId) {
 

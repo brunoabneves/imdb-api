@@ -22,7 +22,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/atores")
+@RequestMapping("/v1/atores")
 public class AtorController {
 
 	private CrudAtorService crudAtorService;
@@ -33,7 +33,7 @@ public class AtorController {
 		return atorAssembler.toCollectionModel(crudAtorService.listar());
 	}
 	
-	@PostMapping("/{filmeId}")
+	@PostMapping("/filmes/{filmeId}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public AtorModel cadastrar (@PathVariable Long filmeId, @RequestBody @Valid Ator ator) {
 		return atorAssembler.toModel(crudAtorService.registrar(filmeId, ator.getNome()));

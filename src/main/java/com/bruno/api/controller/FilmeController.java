@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,11 +22,14 @@ import com.bruno.domain.repository.FilmeRepository;
 import com.bruno.domain.service.CrudFilmeService;
 import com.bruno.domain.service.MediaVotosService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @RestController
-//@RequestMapping("/filmes")
+@RequestMapping("/v1")
 public class FilmeController {
 	
 	private FilmeRepository filmeRepository;
@@ -72,6 +76,11 @@ public class FilmeController {
 	}
 	
 	@PostMapping("/admin/filmes")
+	@ApiOperation(value = "Salva um filme na base de dados", response = Filme[].class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Bearer token",
+				required = true, dataType = "string", paramType = "header")
+	})
 	@ResponseStatus(HttpStatus.CREATED)
 	public FilmeModel cadastrar (@Valid @RequestBody FilmeInput filmeInput) {
 		Filme novoFilme = filmeAssembler.toEntity(filmeInput);
